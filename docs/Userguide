@@ -1,0 +1,225 @@
+Here is how to use the API.
+
+
+Please note the "size":"Size_384". The other option is ofcurse "Size_96"
+I am using enums becuase that makes validation so much easier.
+
+curl -i -X POST -H "Accept: application/json" -H "Content-type: application/json"  -d '{"name":"plate1", "size":"Size_384"}' http://localhost:8080/plates
+
+HTTP/1.1 201
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:50:43 GMT
+
+{"id":1,"name":"plate1","size":384
+
+
+
+curl -i -X POST -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1/wells -d '{"row": 0, "col": 0, "cell_line": "cl_01", "chemical": "chem_01", "concentration": "10"}'
+
+HTTP/1.1 201
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:51:11 GMT
+
+{"plateName":"plate1","plateId":1,"row":0,"column":0,"cellLine":"cl_01","chemical":"chem_01","concentration":10.0}
+
+
+curl -i -X POST -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1/wells -d '{"row": 1, "col": 1, "cell_line": "cl_02", "chemical": "chem_02", "concentration": "10"}'
+
+HTTP/1.1 201
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:52:39 GMT
+
+{"plateName":"plate1","plateId":1,"row":1,"column":1,"cellLine":"cl_02","chemical":"chem_02","concentration":10.0}
+
+
+
+curl -i -X GET -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1
+
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:53:31 GMT
+
+{
+	"id": 1,
+	"name": "plate1",
+	"size": 384,
+	"wells": [{
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 0,
+		"cellLine": "cl_01",
+		"chemical": "chem_01",
+		"concentration": 10.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 1,
+		"column": 1,
+		"cellLine": "cl_02",
+		"chemical": "chem_02",
+		"concentration": 10.0
+	}]
+}
+
+
+curl -i -X DELETE -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1/wells/1/1
+
+HTTP/1.1 200
+Content-Length: 0
+Date: Wed, 28 Sep 2022 21:55:24 GMT
+
+
+
+
+curl -i -X GET -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1
+
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:55:48 GMT
+
+{
+	"id": 1,
+	"name": "plate1",
+	"size": 384,
+	"wells": [{
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 0,
+		"cellLine": "cl_01",
+		"chemical": "chem_01",
+		"concentration": 10.0
+	}]
+}
+
+
+curl -i -X POST -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1/drc -d '{ "cell_line": "cell_line_01", "chemicals": ["c1", "c2"], "min_concentration":"1", "max_concentration":"5", "n_points":"4", "control_chemical":"c3", "control_concentration":"3"}'
+
+HTTP/1.1 201
+Content-Length: 0
+Date: Wed, 28 Sep 2022 21:57:51 GMT
+
+
+curl -i -X GET -H "Accept: application/json" -H "Content-type: application/json" http://localhost:8080/plates/1
+
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Sep 2022 21:58:25 GMT
+
+
+{
+	"id": 1,
+	"name": "plate1",
+	"size": 384,
+	"wells": [{
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 0,
+		"cellLine": "cell_line_01",
+		"chemical": "c1",
+		"concentration": 1.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 1,
+		"cellLine": "cell_line_01",
+		"chemical": "c1",
+		"concentration": 2.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 2,
+		"cellLine": "cell_line_01",
+		"chemical": "c1",
+		"concentration": 3.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 3,
+		"cellLine": "cell_line_01",
+		"chemical": "c1",
+		"concentration": 4.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 4,
+		"cellLine": "cell_line_01",
+		"chemical": "c1",
+		"concentration": 5.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 5,
+		"cellLine": "cell_line_01",
+		"chemical": "c2",
+		"concentration": 1.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 6,
+		"cellLine": "cell_line_01",
+		"chemical": "c2",
+		"concentration": 2.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 7,
+		"cellLine": "cell_line_01",
+		"chemical": "c2",
+		"concentration": 3.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 8,
+		"cellLine": "cell_line_01",
+		"chemical": "c2",
+		"concentration": 4.0
+	}, {
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 9,
+		"cellLine": "cell_line_01",
+		"chemical": "c2",
+		"concentration": 5.0
+	}, {                            START OF CONTROL_CHEMICAL
+		"plateName": "plate1",
+		"plateId": 1,
+		"row": 0,
+		"column": 10,
+		"cellLine": "cell_line_01",
+		"chemical": "c3",
+		"concentration": 3.0
+	},
+	....
+	...
+
+		}, {
+    		"plateName": "plate1",
+    		"plateId": 1,
+    		"row": 22,
+    		"column": 14,
+    		"cellLine": "cell_line_01",
+    		"chemical": "c3",
+    		"concentration": 3.0
+    	}]
+    }
+
+
+

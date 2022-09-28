@@ -23,7 +23,7 @@ public class ValidatorUtil {
         }
     }
 
-    public void validateCreateDRCRequest(CreateDRCRequest request)
+    public static void validateCreateDRCRequest(CreateDRCRequest request)
     {
         if (request.getChemicals().size() == 0) {
             throw new IllegalArgumentException(" chemicals list has no elements");

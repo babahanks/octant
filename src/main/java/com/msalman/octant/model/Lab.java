@@ -94,6 +94,8 @@ public class Lab {
             throw new NoSuchElementException(String.format("Plate with id: %s not found", plateId));
         }
 
+        ValidatorUtil.validateCreateDRCRequest(drc);
+
         if (drc.getChemicals().size() * drc.getN_points() > plate.getSize().getNumOfWells()){
             throw new IllegalArgumentException("Not enough wells for DRC");
         }
